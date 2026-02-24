@@ -6,6 +6,7 @@
   "info": {
     "name": "ModerationX",
     "description": "ModerationX plugin, with moderation features",
+    "author": "wardenre",
     "tags": [
       "platform:levilamina",
       "type:mod"
@@ -14,7 +15,6 @@
   },
   "variants": [
     {
-      "label": "",
       "platform": "win-x64",
       "dependencies": {
         "github.com/LiteLDev/LeviLamina": "1.9.*"
