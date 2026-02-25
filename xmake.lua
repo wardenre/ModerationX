@@ -2,19 +2,13 @@ add_rules("mode.debug", "mode.release")
 
 add_repositories("levimc-repo https://github.com/LiteLDev/xmake-repo.git")
 
-add_requires("levilamina", {configs = {target_type = "server"}})
+add_requires("levilamina 1.9.5", {configs = {target_type = "server"}})
 add_requires("levibuildscript")
 add_requires("sqlite3")
 
 if not has_config("vs_runtime") then
     set_runtimes("MD")
 end
-
-option("target_type")
-    set_default("server")
-    set_showmenu(true)
-    set_values("server", "client")
-option_end()
 
 target("ModerationX")
     add_rules("@levibuildscript/linkrule")

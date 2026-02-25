@@ -36,7 +36,7 @@ jobs:
 
       - uses: actions/upload-artifact@v6
         with:
-          name: ${{ github.event.repository.name }}-${{ github.sha }}-server-windows-x64
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-windows-x64
           path: |
             bin/
 
@@ -71,17 +71,17 @@ jobs:
 
       - uses: actions/download-artifact@v7
         with:
-          name: ${{ github.event.repository.name }}-${{ github.sha }}-server-windows-x64
+          name: ${{ github.event.repository.name }}-${{ github.sha }}-windows-x64
           path: artifact
 
       - run: |
           cp CHANGELOG.md LICENSE README.md artifact/
 
       - run: |
-          zip -r ../${{ github.event.repository.name }}-server-windows-x64.zip *
+          zip -r ../${{ github.event.repository.name }}-windows-x64.zip *
         working-directory: artifact
 
       - uses: softprops/action-gh-release@v2
         with:
           files: |
-            ${{ github.event.repository.name }}-server-windows-x64.zip
+            ${{ github.event.repository.name }}-windows-x64.zip

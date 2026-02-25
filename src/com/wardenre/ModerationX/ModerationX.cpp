@@ -5,6 +5,8 @@
 #include "com/wardenre/ModerationX/Command/WhiteList.h"
 #include "com/wardenre/ModerationX/Event/PlayerConnect.h"
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
+#include "com/wardenre/ModerationX/Command/Vanish.h"
+#include "com/wardenre/ModerationX/Event/VanishTick.h"
 
 #include <ll/api/Config.h>
 #include <ll/api/mod/RegisterHelper.h>
@@ -56,9 +58,15 @@ namespace com::wardenre::ModerationX {
 
     bool ModerationX::enable() {
         PlayerConnect::loadEvent(eventbus);
+        VanishTick::loadEvent(eventbus); 
+        // InvSeeTick::loadEvent(eventbus);
+
+        Vanish::loadCommand(registrar);
         Ban::loadCommand(registrar);
         UnBan::loadCommand();
         Whitelist::loadCommand(registrar);
+        // InvSeeCommand::loadCommand(registrar);
+        
         return true;
     }
 

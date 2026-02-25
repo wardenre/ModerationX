@@ -2,6 +2,7 @@
 #include "com/wardenre/ModerationX/ModerationX.h"
 #include "com/wardenre/ModerationX/Config.h"
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
+#include "com/wardenre/ModerationX/Functions/VanishManager.h"
 
 #include <ll/api/event/EventBus.h>
 #include <ll/api/event/player/PlayerConnectEvent.h>
@@ -22,9 +23,7 @@ namespace com::wardenre::ModerationX::Event {
 
         if (db.isBanned(name)) {
             auto info = db.getBanInfo(name);
-            player.disconnect("You're banned!\nBan ID: #" + std::to_string(info->banId) + 
-                             "\nreason: " + info->reason + 
-                             "\nAdmin: " + info->admin);
+            player.disconnect("You're banned!\nBan ID: #" + std::to_string(info->banId) + "\nreason: " + info->reason + "\nAdmin: " + info->admin);
             return;
         }
 
@@ -45,6 +44,7 @@ namespace com::wardenre::ModerationX::Event {
                 return;
             }
         }
+        Functions::VanishManager::getInstance().refreshForNewPlayer(player);
         });
     }
 }
