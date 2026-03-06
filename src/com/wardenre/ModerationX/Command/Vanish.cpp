@@ -1,16 +1,17 @@
 #include "com/wardenre/ModerationX/Command/Vanish.h"
 #include "com/wardenre/ModerationX/Functions/VanishManager.h"
 
-#include <mc/world/actor/player/Player.h>
-#include <mc/server/commands/CommandOrigin.h>
-#include <mc/server/commands/CommandOutput.h>
-#include <ll/api/command/CommandHandle.h>
-#include <ll/api/command/CommandRegistrar.h>
+#include "ll/api/command/CommandHandle.h"
+#include "ll/api/command/CommandRegistrar.h"
+
+#include "mc/world/actor/player/Player.h"
+#include "mc/server/commands/CommandOrigin.h"
+#include "mc/server/commands/CommandOutput.h"
 
 namespace com::wardenre::ModerationX::Command {
     using namespace ll::command;
 
-    void Vanish::loadCommand(CommandRegistrar& ) {
+    void Vanish::loadCommand() {
         auto& vanish = CommandRegistrar::getInstance(false).getOrCreateCommand("vanish", "Toggle vanish mode", CommandPermissionLevel::GameDirectors);
         vanish.alias("v");
 

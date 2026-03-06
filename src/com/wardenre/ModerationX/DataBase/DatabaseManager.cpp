@@ -1,4 +1,5 @@
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
+
 #include <ctime>
 
 namespace com::wardenre::ModerationX::DataBase {
@@ -58,6 +59,7 @@ namespace com::wardenre::ModerationX::DataBase {
         std::vector<WhitelistEntry> entries;
         auto res = db->query("SELECT name, xuid FROM whitelist ORDER BY name;");
         
+        entries.reserve(res.size());
         for (auto& row : res) {
             entries.push_back(WhitelistEntry{row[0], row[1]});
         }

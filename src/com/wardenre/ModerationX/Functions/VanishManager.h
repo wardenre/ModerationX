@@ -1,7 +1,7 @@
-#include <string>
-#include <unordered_set>
 #include "mc/world/actor/player/Player.h"
 
+#include <string>
+#include <unordered_set>
 namespace com::wardenre::ModerationX::Functions {
 
     class VanishManager {
@@ -10,8 +10,8 @@ namespace com::wardenre::ModerationX::Functions {
 
         void vanish(Player& player);
         void unvanish(Player& player);
-        bool isVanished(Player const& player) const;
-        bool isVanished(std::string const& name) const;
+        [[nodiscard]] bool isVanished(Player const& player) const;
+        [[nodiscard]] bool isVanished(std::string const& name) const;
 
         void hideHeldItemForAll(Player& player);
         void refreshForNewPlayer(Player& joiner);

@@ -1,4 +1,5 @@
-#include <ll/api/command/CommandRegistrar.h>
+#include "ll/api/command/CommandRegistrar.h"
+
 #include <string>
 
 namespace com::wardenre::ModerationX::Command {

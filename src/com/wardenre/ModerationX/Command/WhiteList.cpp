@@ -1,9 +1,10 @@
 #include "com/wardenre/ModerationX/Command/WhiteList.h"
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
 
-#include <mc/server/commands/CommandOrigin.h>
-#include <mc/server/commands/CommandOutput.h>
-#include <ll/api/command/CommandHandle.h>
+#include "ll/api/command/CommandHandle.h"
+
+#include "mc/server/commands/CommandOrigin.h"
+#include "mc/server/commands/CommandOutput.h"
 
 namespace com::wardenre::ModerationX::Command  {
     void Whitelist::loadCommand(CommandRegistrar& registrar) {
@@ -16,8 +17,8 @@ namespace com::wardenre::ModerationX::Command  {
             .execute([](CommandOrigin const&, CommandOutput& output, WListParams const& param) {
                 auto& db = DataBase::DatabaseManager::getInstance();
                 if (param.operation == WListOperation::add) {
-                    if (db.getWhitelistEntry(param.target)) {
-                        if (!db.addWhiteList(param.target)) {
+                    if (!db.getWhitelistEntry(param.target)) {
+                        if (db.addWhiteList(param.target)) {
                             output.error("Error adding to whitelist");
                         } else {
                             output.success("successfully added to the white list");

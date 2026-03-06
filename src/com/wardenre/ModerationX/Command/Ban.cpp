@@ -1,13 +1,13 @@
 #include "com/wardenre/ModerationX/Command/Ban.h"
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
-#include "com/wardenre/ModerationX/ModerationX.h"
 
-#include <mc/world/actor/player/Player.h>
-#include <mc/server/commands/CommandOrigin.h>
-#include <mc/server/commands/CommandOutput.h>
-#include <ll/api/command/CommandHandle.h>
-#include <ll/api/command/CommandRegistrar.h>
-#include <ll/api/service/PlayerInfo.h>
+#include "ll/api/command/CommandHandle.h"
+#include "ll/api/command/CommandRegistrar.h"
+
+#include "mc/world/actor/player/Player.h"
+#include "mc/server/commands/CommandOrigin.h"
+#include "mc/server/commands/CommandOutput.h"
+
 #include <ctime>
 #include <iomanip>
 
@@ -17,7 +17,7 @@ namespace com::wardenre::ModerationX::Command {
     static std::string formatTime(long long timestamp) {
         if (timestamp == 0) return "Forever";
         std::time_t t = static_cast<std::time_t>(timestamp);
-        std::tm tm;
+        std::tm tm{};
         #ifdef _WIN32
         localtime_s(&tm, &t);
         #endif

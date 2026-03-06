@@ -1,10 +1,11 @@
 #include "com/wardenre/ModerationX/Command/UnBan.h"
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
 
-#include <mc/server/commands/CommandOrigin.h>
-#include <mc/server/commands/CommandOutput.h>
-#include <ll/api/command/CommandHandle.h>
-#include <ll/api/command/CommandRegistrar.h>
+#include "mc/server/commands/CommandOrigin.h"
+#include "mc/server/commands/CommandOutput.h"
+
+#include "ll/api/command/CommandHandle.h"
+#include "ll/api/command/CommandRegistrar.h"
 
 namespace com::wardenre::ModerationX::Command {
     using namespace ll::command;

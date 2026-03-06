@@ -1,11 +1,11 @@
 #include "com/wardenre/ModerationX/Functions/VanishManager.h"
 #include "com/wardenre/ModerationX/ModerationX.h"
 
-#include <mc/world/level/Level.h>
-#include <mc/world/effect/MobEffectInstance.h>
-#include <mc/network/packet/MobEquipmentPacket.h>
-#include <mc/world/item/ItemStack.h>
-#include <mc/world/actor/player/Player.h>
+#include "mc/world/level/Level.h"
+#include "mc/world/effect/MobEffectInstance.h"
+#include "mc/network/packet/MobEquipmentPacket.h"
+#include "mc/world/item/ItemStack.h"
+#include "mc/world/actor/player/Player.h"
 
 namespace com::wardenre::ModerationX::Functions {
 

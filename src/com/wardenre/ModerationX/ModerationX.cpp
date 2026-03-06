@@ -8,14 +8,11 @@
 #include "com/wardenre/ModerationX/Command/Vanish.h"
 #include "com/wardenre/ModerationX/Event/VanishTick.h"
 
-#include <ll/api/Config.h>
-#include <ll/api/mod/RegisterHelper.h>
-#include <ll/api/event/EventBus.h>
-#include <ll/api/command/CommandHandle.h>
-#include <ll/api/command/CommandRegistrar.h>
-#include <mc/server/commands/CommandOrigin.h>
-#include <mc/server/commands/CommandOutput.h>
-#include <mc/world/actor/player/Player.h>
+#include "ll/api/Config.h"
+#include "ll/api/mod/RegisterHelper.h"
+#include "ll/api/event/EventBus.h"
+#include "ll/api/command/CommandHandle.h"
+#include "ll/api/command/CommandRegistrar.h"
 
 namespace com::wardenre::ModerationX {
     using namespace ll::event;
@@ -34,7 +31,7 @@ namespace com::wardenre::ModerationX {
         return instance;
     }
 
-    bool ModerationX::load() {
+    bool ModerationX::load() const {
         if (config.loginfo) {
         }
 
@@ -56,25 +53,23 @@ namespace com::wardenre::ModerationX {
         return true;
     }
 
-    bool ModerationX::enable() {
+    bool ModerationX::enable() const {
         PlayerConnect::loadEvent(eventbus);
         VanishTick::loadEvent(eventbus); 
-        // InvSeeTick::loadEvent(eventbus);
 
-        Vanish::loadCommand(registrar);
+        Vanish::loadCommand();
         Ban::loadCommand(registrar);
         UnBan::loadCommand();
         Whitelist::loadCommand(registrar);
-        // InvSeeCommand::loadCommand(registrar);
         
         return true;
     }
 
-    bool ModerationX::disable() {
+    bool ModerationX::disable() const {
         return true;
     }
 
-    bool ModerationX::unload() {
+    bool ModerationX::unload() const {
         return true;
     }
 

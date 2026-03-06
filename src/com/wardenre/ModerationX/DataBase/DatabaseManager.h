@@ -1,6 +1,7 @@
+#include "com/wardenre/ModerationX/DataBase/Wrapper/SQLiteWrapper.h"
+
 #include <memory>
 #include <optional>
-#include "com/wardenre/ModerationX/DataBase/Wrapper/SQLiteWrapper.h"
 
 namespace com::wardenre::ModerationX::DataBase {
 

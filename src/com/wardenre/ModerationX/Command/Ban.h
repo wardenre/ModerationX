@@ -1,6 +1,8 @@
+#include "ll/api/command/CommandRegistrar.h"
+
 #include "mc/world/actor/player/Player.h"
-#include <ll/api/command/CommandRegistrar.h>
-#include <mc/server/commands/CommandSelector.h>
+#include "mc/server/commands/CommandSelector.h"
+
 #include <string>
 
 namespace com::wardenre::ModerationX::Command {
