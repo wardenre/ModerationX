@@ -12,8 +12,8 @@ namespace com::wardenre::ModerationX::Event {
     using namespace ll::event;
     using namespace Functions;
 
-    void VanishTick::loadEvent(EventBus& EventBus) {
-        EventBus.emplaceListener<LevelTickEvent>([](LevelTickEvent&) {
+    void VanishTick::loadEvent(EventBus& eventBus) {
+        eventBus.emplaceListener<LevelTickEvent>([](LevelTickEvent&) {
             tickCounter++;
             if (tickCounter < 5) return;
             tickCounter = 0;
@@ -24,6 +24,7 @@ namespace com::wardenre::ModerationX::Event {
 
             level->forEachPlayer([&](Player& player) -> bool {
                 if (vm.isVanished(player)) {
+                    vm.hidePlayerForAll(player);
                     vm.hideHeldItemForAll(player);
                 }
                 return true;
@@ -31,3 +32,4 @@ namespace com::wardenre::ModerationX::Event {
         });
     }
 }
+

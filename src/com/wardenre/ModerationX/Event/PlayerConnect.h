@@ -2,8 +2,9 @@
 
 namespace com::wardenre::ModerationX::Event {
     using namespace ll::event;
+
     class PlayerConnect {
-        public:
+    public:
         static void loadEvent(EventBus& EventBus);
     };
 }

@@ -7,6 +7,7 @@
 #include "com/wardenre/ModerationX/DataBase/DatabaseManager.h"
 #include "com/wardenre/ModerationX/Command/Vanish.h"
 #include "com/wardenre/ModerationX/Event/VanishTick.h"
+#include "com/wardenre/ModerationX/Hook/VanishContainerHook.h"
 
 #include "ll/api/Config.h"
 #include "ll/api/mod/RegisterHelper.h"
@@ -22,6 +23,7 @@ namespace com::wardenre::ModerationX {
     using namespace Event;
     using namespace Command;
     using namespace DataBase;
+    using namespace Hook;
 
     auto& registrar = CommandRegistrar::getInstance(false);
     auto& eventbus = EventBus::getInstance();
@@ -61,6 +63,8 @@ namespace com::wardenre::ModerationX {
         Ban::loadCommand(registrar);
         UnBan::loadCommand();
         Whitelist::loadCommand(registrar);
+
+        VanishContainerHook::getInstance();
         
         return true;
     }

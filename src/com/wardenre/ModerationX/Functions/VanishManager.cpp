@@ -2,10 +2,14 @@
 #include "com/wardenre/ModerationX/ModerationX.h"
 
 #include "mc/world/level/Level.h"
-#include "mc/world/effect/MobEffectInstance.h"
+#include "mc/network/packet/RemoveActorPacket.h"
 #include "mc/network/packet/MobEquipmentPacket.h"
+#include "mc/network/Packet.h"
 #include "mc/world/item/ItemStack.h"
+#include "mc/world/actor/Actor.h"
 #include "mc/world/actor/player/Player.h"
+#include "mc/legacy/ActorUniqueID.h"
+#include "ll/api/memory/Memory.h"
 
 namespace com::wardenre::ModerationX::Functions {
 
@@ -29,10 +33,7 @@ namespace com::wardenre::ModerationX::Functions {
         auto& logger = ModerationX::getInstance().getLogger();
         logger.info("{} is now VANISHED", name);
 
-        MobEffectInstance invisEffect(static_cast<uint>(INVISIBILITY_EFFECT_ID));
-        player.addEffect(invisEffect);
-        player.setInvisible(true);
-        hideHeldItemForAll(player);
+        hidePlayerForAll(player);
     }
 
     void VanishManager::unvanish(Player& player) {
@@ -41,13 +42,48 @@ namespace com::wardenre::ModerationX::Functions {
 
         auto& logger = ModerationX::getInstance().getLogger();
         logger.info("{} is now VISIBLE", name);
-        player.removeEffect(INVISIBILITY_EFFECT_ID);
-        player.setInvisible(false);
+
+        showPlayerForAll(player);
+    }
+
+    static void sendRemoveActor(Player& target, Player& viewer) {
+        RemoveActorPacket pkt;
+        auto id = target.getOrCreateUniqueID();
+        ll::memory::dAccess<ActorUniqueID>(&pkt, 48) = id;
+        viewer.sendNetworkPacket(pkt);
+    }
+
+    void VanishManager::hidePlayerForAll(Player& player) {
+        Level& level = player.getLevel();
+
+        level.forEachPlayer([&](Player& other) -> bool {
+            if (&other != &player) {
+                sendRemoveActor(player, other);
+            }
+            return true;
+        });
+    }
+
+    void VanishManager::showPlayerForAll(Player& player) {
+        Level& level = player.getLevel();
+
+        auto addPkt = player.tryCreateAddActorPacket();
+        if (addPkt) {
+            level.forEachPlayer([&](Player& other) -> bool {
+                if (&other != &player) {
+                    other.sendNetworkPacket(*addPkt);
+                }
+                return true;
+            });
+        }
+    }
+
+    void VanishManager::hidePlayerFor(Player& vanished, Player& viewer) {
+        sendRemoveActor(vanished, viewer);
     }
 
     void VanishManager::hideHeldItemForAll(Player& player) {
         Level& level = player.getLevel();
-
         ItemStack emptyItem;
 
         MobEquipmentPacket pkt(
@@ -71,7 +107,7 @@ namespace com::wardenre::ModerationX::Functions {
 
         level.forEachPlayer([&](Player& other) -> bool {
             if (&other != &joiner && isVanished(other)) {
-                hideHeldItemForAll(other);
+                hidePlayerFor(other, joiner);
             }
             return true;
         });

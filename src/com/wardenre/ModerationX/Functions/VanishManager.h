@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_set>
+
 namespace com::wardenre::ModerationX::Functions {
 
     class VanishManager {
@@ -14,11 +15,13 @@ namespace com::wardenre::ModerationX::Functions {
         [[nodiscard]] bool isVanished(std::string const& name) const;
 
         void hideHeldItemForAll(Player& player);
+        void hidePlayerForAll(Player& player);
+        void showPlayerForAll(Player& player);
+        void hidePlayerFor(Player& vanished, Player& viewer);
         void refreshForNewPlayer(Player& joiner);
 
     private:
         std::unordered_set<std::string> mVanished;
-        static constexpr int INVISIBILITY_EFFECT_ID = 14;
     };
 
 }
