@@ -17,5 +17,9 @@ namespace com::wardenre::ModerationX::Command {
             WListOperation operation;
             std::string target;
         };
+
+        struct WListListParams {
+            int page;
+        };
     };
 }

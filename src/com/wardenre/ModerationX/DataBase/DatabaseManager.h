@@ -18,6 +18,12 @@ namespace com::wardenre::ModerationX::DataBase {
         std::string xuid;
     };
 
+    struct WhitelistEntryFull {
+        std::string name;
+        std::string xuid;
+        long long createdAt;
+    };
+
     class DatabaseManager {
     public:
         static DatabaseManager& getInstance();
@@ -35,6 +41,8 @@ namespace com::wardenre::ModerationX::DataBase {
         int getActiveBanCount();
         std::vector<BanInfo> getAllBans();
         std::vector<WhitelistEntry>  getAllWhitelist();
+        std::vector<WhitelistEntryFull> getAllWhitelistFull();
+
 
     private:
         std::unique_ptr<Wrapper::SQLiteWrapper> db;

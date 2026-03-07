@@ -42,6 +42,19 @@ namespace com::wardenre::ModerationX::DataBase {
         return WhitelistEntry{res[0][0], res[0][1]};
     }
 
+    std::vector<WhitelistEntryFull> DatabaseManager::getAllWhitelistFull() {
+        std::vector<WhitelistEntryFull> entries;
+        auto res = db->query("SELECT name, xuid, created_at FROM whitelist ORDER BY name;");
+        for (auto& row : res) {
+            WhitelistEntryFull entry;
+            entry.name = row[0];
+            entry.xuid = row[1];
+            entry.createdAt = row[2].empty() ? 0 : std::stoll(row[2]);
+            entries.push_back(entry);
+        }
+        return entries;
+    }
+
     bool DatabaseManager::addWhiteList(const std::string& name) {
         return db->execute("INSERT OR IGNORE INTO whitelist (name, xuid, created_at) VALUES (?, ?, ?);", 
             {name, "", std::to_string(std::time(nullptr))});

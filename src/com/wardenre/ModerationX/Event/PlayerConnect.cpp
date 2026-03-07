@@ -52,6 +52,7 @@ namespace com::wardenre::ModerationX::Event {
                     return;
                 }
             }
+            Functions::VanishManager::getInstance().refreshForNewPlayer(player);
         });
     }
 }
