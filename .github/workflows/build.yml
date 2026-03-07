@@ -29,7 +29,7 @@ jobs:
           xmake repo -u
 
       - run: |
-          xmake f -a x64 -m release -p windows -v --target_type=server -y
+          xmake f -a x64 -m release -p windows -v -y
 
       - run: |
           xmake -v -y
