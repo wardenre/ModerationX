@@ -1,5 +1,6 @@
-#include "ll/api/command/CommandRegistrar.h"
+#pragma once
 
+#include "ll/api/command/CommandRegistrar.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/server/commands/CommandSelector.h"
 
@@ -7,21 +8,20 @@
 
 namespace com::wardenre::ModerationX::Command {
     using namespace ll::command;
+
     class Ban {
-        public:
+    public:
         static void loadCommand(CommandRegistrar& registrar);
-        private:
-        enum BanOperation: int {
-            ip,
-            soft,
-            perm,
-            norm
-        };
+
+    private:
+        enum class BanOperation : int { ip, soft, perm, norm };
+
         struct BanParams {
             CommandSelector<Player> player;
-            BanOperation operation;
-            int time;
-            std::string reason;
+            BanOperation            operation;
+            int                     time;
+            std::string             reason;
         };
     };
-}
+
+} // namespace com::wardenre::ModerationX::Command

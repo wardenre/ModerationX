@@ -1,5 +1,5 @@
 #include "com/wardenre/ModerationX/Event/VanishTick.h"
-#include "com/wardenre/ModerationX/Functions/VanishManager.h"
+#include "com/wardenre/ModerationX/Manager/VanishManager.h"
 
 #include "ll/api/event/EventBus.h"
 #include "ll/api/event/world/LevelTickEvent.h"
@@ -10,16 +10,15 @@
 
 namespace com::wardenre::ModerationX::Event {
     using namespace ll::event;
-    using namespace Functions;
+    using namespace Manager;
 
     void VanishTick::loadEvent(EventBus& eventBus) {
         eventBus.emplaceListener<LevelTickEvent>([](LevelTickEvent&) {
-            tickCounter++;
-            if (tickCounter < 5) return;
+            if (++tickCounter < 5) return;
             tickCounter = 0;
 
-            auto& vm   = VanishManager::getInstance();
-            auto level = ll::service::getLevel();
+            auto& vm    = VanishManager::getInstance();
+            auto  level = ll::service::getLevel();
             if (!level) return;
 
             level->forEachPlayer([&](Player& player) -> bool {
@@ -31,5 +30,5 @@ namespace com::wardenre::ModerationX::Event {
             });
         });
     }
-}
 
+} // namespace com::wardenre::ModerationX::Event

@@ -1,19 +1,21 @@
-#include "com/wardenre/ModerationX/Hook/VanishContainerHook.h"
-#include "com/wardenre/ModerationX/Functions/VanishManager.h"
+#include "com/wardenre/ModerationX/Hook/VanishHook.h"
+#include "com/wardenre/ModerationX/Manager/VanishManager.h"
 
 #include "ll/api/memory/Hook.h"
 
 #include "mc/world/actor/Actor.h"
 #include "mc/world/actor/player/Player.h"
 #include "mc/world/level/block/actor/ChestBlockActor.h"
+#include "mc/server/ServerPlayer.h"
+#include "mc/network/Packet.h"
 
 #include <memory>
 
 namespace com::wardenre::ModerationX::Hook {
-    using namespace Functions;
+    using namespace Manager;
 
-    VanishContainerHook& VanishContainerHook::getInstance() {
-        static VanishContainerHook instance;
+    VanishHook& VanishHook::getInstance() {
+        static VanishHook instance;
         return instance;
     }
 
@@ -27,9 +29,7 @@ namespace com::wardenre::ModerationX::Hook {
     ) {
         if (actor.isPlayer()) {
             auto& player = static_cast<Player&>(actor);
-            if (VanishManager::getInstance().isVanished(player)) {
-                return;
-            }
+            if (VanishManager::getInstance().isVanished(player)) return;
         }
         origin(actor);
     }
@@ -44,20 +44,31 @@ namespace com::wardenre::ModerationX::Hook {
     ) {
         if (actor.isPlayer()) {
             auto& player = static_cast<Player&>(actor);
-            if (VanishManager::getInstance().isVanished(player)) {
-                return;
-            }
+            if (VanishManager::getInstance().isVanished(player)) return;
         }
         origin(actor);
     }
 
-    struct VanishContainerHook::Impl {
+    LL_TYPE_INSTANCE_HOOK(
+        VanishAddActorHook,
+        ll::memory::HookPriority::Normal,
+        ServerPlayer,
+        &ServerPlayer::$tryCreateAddActorPacket,
+        std::unique_ptr<Packet>
+    ) {
+        if (VanishManager::getInstance().isVanished(*this)) return nullptr;
+        return origin();
+    }
+
+    struct VanishHook::Impl {
         ll::memory::HookRegistrar<
             ChestOpenHook,
-            ChestCloseHook
+            ChestCloseHook,
+            VanishAddActorHook
         > hooks;
     };
 
-    VanishContainerHook::VanishContainerHook() : pImpl(std::make_unique<Impl>()) {}
-    VanishContainerHook::~VanishContainerHook() = default;
-}
+    VanishHook::VanishHook() : pImpl(std::make_unique<Impl>()) {}
+    VanishHook::~VanishHook() = default;
+
+} // namespace com::wardenre::ModerationX::Hook

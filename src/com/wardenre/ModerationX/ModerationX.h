@@ -6,22 +6,21 @@
 namespace com::wardenre::ModerationX {
 
 class ModerationX {
-
 public:
     static ModerationX& getInstance();
 
     ModerationX() : mSelf(*ll::mod::NativeMod::current()) {}
 
-    [[nodiscard]] ll::mod::NativeMod& getSelf() const { return mSelf; }
-    [[nodiscard]] ll::io::Logger& getLogger() const { return mSelf.getLogger(); }
+    [[nodiscard]] ll::mod::NativeMod& getSelf()   const { return mSelf; }
+    [[nodiscard]] ll::io::Logger&     getLogger() const { return mSelf.getLogger(); }
 
-    bool load() const;
-    bool enable() const;
+    bool load()    const;
+    bool enable()  const;
     bool disable() const;
-    bool unload() const;
+    bool unload()  const;
 
 private:
     ll::mod::NativeMod& mSelf;
 };
 
-}
+} // namespace com::wardenre::ModerationX

@@ -1,24 +1,29 @@
+#pragma once
+
 #include <string>
 
 namespace com::wardenre::ModerationX {
-    struct WhiteList {
-        bool enabled = true;
+
+    struct WhitelistConfig {
+        bool enabled     = true;
         bool requireXuid = true;
     };
-    struct Sqlite {
+
+    struct SqliteConfig {
         std::string dbname = "database";
     };
 
-    struct DataBasee {
-        Sqlite sqlite;
+    struct DatabaseConfig {
+        SqliteConfig sqlite;
     };
 
     struct Config {
-        int version = 1;
-        bool loginfo = true;
-        WhiteList whitelist;
-        DataBasee db;
+        int             version = 1;
+        bool            loginfo = true;
+        WhitelistConfig whitelist;
+        DatabaseConfig  db;
     };
 
     inline Config config;
-}
+
+} // namespace com::wardenre::ModerationX

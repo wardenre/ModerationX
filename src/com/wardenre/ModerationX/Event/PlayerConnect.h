@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ll/api/event/EventBus.h"
 
 namespace com::wardenre::ModerationX::Event {
@@ -5,6 +7,7 @@ namespace com::wardenre::ModerationX::Event {
 
     class PlayerConnect {
     public:
-        static void loadEvent(EventBus& EventBus);
+        static void loadEvent(EventBus& eventBus);
     };
-}
+
+} // namespace com::wardenre::ModerationX::Event

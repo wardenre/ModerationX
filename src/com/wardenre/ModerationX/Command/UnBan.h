@@ -1,12 +1,17 @@
+#pragma once
+
 #include <string>
 
 namespace com::wardenre::ModerationX::Command {
-    class UnBan {
-        public:
+
+    class Unban {
+    public:
         static void loadCommand();
-        private:
-        struct UnBanParams {
+
+    private:
+        struct UnbanParams {
             std::string player;
         };
     };
-}
+
+} // namespace com::wardenre::ModerationX::Command

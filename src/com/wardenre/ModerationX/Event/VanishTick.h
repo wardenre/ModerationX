@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ll/api/event/EventBus.h"
 
 namespace com::wardenre::ModerationX::Event {
@@ -5,8 +7,10 @@ namespace com::wardenre::ModerationX::Event {
 
     class VanishTick {
     public:
-        static void loadEvent(EventBus& EventBus);
+        static void loadEvent(EventBus& eventBus);
+
     private:
         inline static int tickCounter = 0;
     };
-}
+
+} // namespace com::wardenre::ModerationX::Event
